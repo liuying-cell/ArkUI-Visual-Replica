@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#090b10" />
+    <title>Motion Lab · HTML reference</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="device" id="device" aria-label="Motion Lab reference app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-signal" aria-hidden="true"></span>
+          <span>MOTION LAB</span>
+        </div>
+        <span class="build-tag">HTML / 01</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">NATIVE MOTION STUDY</p>
+        <h1 id="page-title">Motion<br /><em>grammar.</em></h1>
+        <p class="intro-copy">Three interaction studies for temporal fidelity: choreography, gesture physics and shared geometry.</p>
+      </section>
+
+      <nav class="scene-switch" aria-label="Motion scenes">
+        <button class="scene-tab is-active" type="button" data-scene-button="stack" aria-selected="true">01 Timeline</button>
+        <button class="scene-tab" type="button" data-scene-button="sheet" aria-selected="false">02 Sheet</button>
+        <button class="scene-tab" type="button" data-scene-button="orb" aria-selected="false">03 Shared</button>
+      </nav>
+
+      <section class="stage" id="stage" aria-live="polite">
+        <section class="scene scene-stack is-active" data-scene-panel="stack" aria-label="Staggered timeline">
+          <div class="scene-label"><span>01</span> TIMELINE / STAGGER</div>
+          <div class="stack-list" id="stackList">
+            <article class="stack-card" data-stack-card>
+              <div class="card-index">A1</div>
+              <div class="card-copy">
+                <span>RESPONSE</span>
+                <strong>Fast lane</strong>
+              </div>
+              <div class="card-meter"><i style="--meter: 72%"></i></div>
+            </article>
+            <article class="stack-card" data-stack-card>
+              <div class="card-index">B2</div>
+              <div class="card-copy">
+                <span>RHYTHM</span>
+                <strong>Soft cascade</strong>
+              </div>
+              <div class="card-meter"><i style="--meter: 88%"></i></div>
+            </article>
+            <article class="stack-card" data-stack-card>
+              <div class="card-index">C3</div>
+              <div class="card-copy">
+                <span>SETTLE</span>
+                <strong>Quiet land</strong>
+              </div>
+              <div class="card-meter"><i style="--meter: 54%"></i></div>
+            </article>
+          </div>
+          <button class="replay-button" id="replayStack" type="button">
+            <span aria-hidden="true">↻</span>
+            Replay sequence
+          </button>
+          <p class="stage-hint">620 ms · 85 ms stagger · spring-like settle</p>
+        </section>
+
+        <section class="scene scene-sheet" data-scene-panel="sheet" aria-label="Spring bottom sheet">
+          <div class="scene-label"><span>02</span> GESTURE / SPRING</div>
+          <div class="sheet-context">
+            <p class="context-kicker">NOW PLAYING</p>
+            <h2>Quiet signal</h2>
+            <p>Harbor lights · 04:18</p>
+            <div class="waveform" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+          <button class="sheet-prompt" id="sheetPrompt" type="button">TAP OR PULL UP</button>
+          <div class="sheet-scrim" id="sheetScrim" aria-hidden="true"></div>
+          <article class="bottom-sheet" id="bottomSheet" aria-label="Playback controls">
+            <div class="sheet-handle" aria-hidden="true"><i></i></div>
+            <div class="sheet-content">
+              <div class="sheet-heading">
+                <div>
+                  <p class="context-kicker">PLAYBACK</p>
+                  <h2>Quiet signal</h2>
+                </div>
+                <span class="status-pill" id="sheetState">closed</span>
+              </div>
+              <div class="track-line"><i id="sheetTrack"></i></div>
+              <div class="time-row"><span>01:12</span><span>04:18</span></div>
+              <div class="transport-row" aria-hidden="true">
+                <span>‹</span><strong>▶</strong><span>›</span>
+              </div>
+              <p class="sheet-note">Drag the surface. Release above the threshold or with upward velocity; the sheet inherits motion instead of restarting.</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="scene scene-orb" data-scene-panel="orb" aria-label="Shared element transition">
+          <div class="scene-label"><span>03</span> GEOMETRY / SHARED</div>
+          <article class="orb-home" id="orbHome">
+            <div class="orb-thumb-space" id="orbThumbSpace" aria-hidden="true"></div>
+            <p class="context-kicker">FEATURED OBJECT</p>
+            <h2>Meridian orb</h2>
+            <p>A shared element keeps identity while its frame, scale and corner radius change.</p>
+            <button class="orb-action" id="openDetail" type="button">Open object <span aria-hidden="true">↗</span></button>
+          </article>
+          <article class="orb-detail" id="orbDetail" aria-hidden="true">
+            <button class="close-button" id="closeDetail" type="button" aria-label="Close detail">×</button>
+            <div class="orb-hero-space" id="orbHeroSpace" aria-hidden="true"></div>
+            <div class="orb-detail-copy">
+              <p class="context-kicker">OBJECT 07</p>
+              <h2>Meridian<br />orb</h2>
+              <p>Geometry transition. One object becomes the destination surface without a fade-shaped handoff.</p>
+              <div class="detail-meta"><span>RADIUS 50%</span><span>FRAME 1 → 1.8</span></div>
+            </div>
+          </article>
+          <div class="shared-orb" id="sharedOrb" aria-hidden="true"><span>M</span></div>
+        </section>
+      </section>
+
+      <footer class="dock">
+        <span><i class="dock-dot"></i> 390 × 844</span>
+        <span>60 FPS TARGET</span>
+        <span id="clock">00:00</span>
+      </footer>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "motion-lab-batch-04",
+  "source": {
+    "type": "html",
+    "path": "html-motion-lab-04/index.html",
+    "scene": "interruptible-timeline",
+    "viewport": { "width": 390, "height": 844, "unit": "css-px" }
+  },
+  "target": { "platform": "HarmonyOS NEXT", "apiLevel": 18, "unit": "vp" },
+  "scenes": [
+    {
+      "id": "interruptible-timeline",
+      "trigger": { "type": "tap", "control": "Play / Reverse" },
+      "durationMs": 1400,
+      "properties": ["marker.translateX", "marker.scale", "marker.opacity"],
+      "timeline": {
+        "range": [0, 1],
+        "phaseWindows": [[0, 0.62], [0.17, 0.78], [0.34, 1]],
+        "localKeyframes": [0, 0.8, 1],
+        "localInterpolation": "smoothstep",
+        "translateX": [-66, 74, 66],
+        "scale": [0.76, 1.05, 1],
+        "opacity": [0.42, 1, 1],
+        "units": "Reference CSS px and target ArkUI vp are authored separately with the same logical offsets."
+      },
+      "interruption": "Every tap flips the requested endpoint. Cancel the outgoing run and start from the last applied progress with a duration proportional to the remaining distance. Each marker retraces the same phase mapping. Position, scale and opacity stay continuous. Velocity changes sign immediately.",
+      "endpoints": { "initial": 0, "entered": 1, "reversed": 0, "rapidForwardReverseForward": 1 },
+      "accessibility": "A labelled Reduce motion control cancels the active run and applies its requested endpoint immediately. Following taps switch endpoints without travel while enabled. The HTML initializes this control from prefers-reduced-motion. The native lab uses the explicit control.",
+      "fallback": "Reduced motion keeps endpoint distinctions and removes intermediate movement.",
+      "performance": "One Animator drives three stable nodes. Each tick updates one component-local scalar and maps transform, scale and opacity without layout changes.",
+      "timingValidation": {
+        "sampling": { "reference": "browser-screencast", "target": "emulator-window" },
+        "trackChecks": {
+          "tracksInExpectedOrder": ["lime", "lavender", "peach"],
+          "property": "marker.translateX",
+          "travelFractions": [0.1, 0.9],
+          "timeOrigin": "Lime marker first crosses 10% of its travel in each capture.",
+          "toleranceMs": 75,
+          "handoff": "Inspect rendered positions before and after each direction change. Confirm only the latest run settles."
+        },
+        "checkpoints": [
+          { "name": "first-visible-motion", "anchor": "firstMotionMs", "toleranceMs": 75 },
+          { "name": "peak-visible-motion", "anchor": "peakMotionMs", "toleranceMs": 75 }
+        ]
+      }
+    }
+  ]
+}
+

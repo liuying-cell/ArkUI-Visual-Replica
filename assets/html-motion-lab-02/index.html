@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#080b0d" />
+    <title>Motion Lab 02 · HTML reference</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="device" aria-label="Motion Lab 02 reference app">
+      <header class="topbar">
+        <div class="brand"><span class="brand-dot"></span><span>MOTION LAB</span></div>
+        <span class="build-tag">HTML / 02</span>
+      </header>
+
+      <section class="intro">
+        <p class="eyebrow">ADVANCED MOTION STUDY</p>
+        <h1>System<br /><em>motion.</em></h1>
+        <p class="intro-copy">Scroll progress, direct horizontal manipulation, and retriggerable keyframe feedback.</p>
+      </section>
+
+      <nav class="scene-switch" aria-label="Batch two scenes">
+        <button class="scene-tab is-active" type="button" data-scene-button="scroll" aria-selected="true">01 Scroll</button>
+        <button class="scene-tab" type="button" data-scene-button="tabs" aria-selected="false">02 Tabs</button>
+        <button class="scene-tab" type="button" data-scene-button="burst" aria-selected="false">03 Burst</button>
+      </nav>
+
+      <section class="stage" id="stage" aria-live="polite">
+        <section class="scene scene-scroll is-active" data-scene-panel="scroll" aria-label="Scroll-linked header">
+          <div class="scroll-progress"><i id="scrollProgress"></i></div>
+          <div class="compact-bar" id="compactBar">
+            <span>FIELD NOTES</span>
+            <span>00 — 03</span>
+          </div>
+          <div class="scroll-view" id="scrollView">
+            <article class="scroll-hero" id="scrollHero">
+              <div class="hero-number">02</div>
+              <p class="scene-kicker">SCROLL / PROGRESS</p>
+              <h2>Signals<br /><em>in motion.</em></h2>
+              <p>Scroll the field. The masthead condenses while the hero recedes and a progress trace follows the gesture.</p>
+            </article>
+            <div class="feed-list">
+              <article class="feed-card">
+                <span>01 / RHYTHM</span>
+                <h3>Velocity becomes structure.</h3>
+                <p>Position feeds progress. Progress feeds hierarchy.</p>
+              </article>
+              <article class="feed-card acid">
+                <span>02 / PERCEPTION</span>
+                <h3>The header remembers.</h3>
+                <p>A sticky surface keeps context while content moves beneath it.</p>
+              </article>
+              <article class="feed-card">
+                <span>03 / REST</span>
+                <h3>Stop at a readable frame.</h3>
+                <p>The motion trace settles without overshooting the content.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="scene scene-tabs" data-scene-panel="tabs" aria-label="Swipeable segmented tabs">
+          <div class="scene-head">
+            <p class="scene-kicker">GESTURE / SWIPE</p>
+            <h2>Three signals.</h2>
+          </div>
+          <div class="segmented" id="segmented">
+            <div class="tab-pill" id="tabPill"></div>
+            <button class="tab-choice is-active" type="button" data-tab-button="0">Pulse</button>
+            <button class="tab-choice" type="button" data-tab-button="1">Drift</button>
+            <button class="tab-choice" type="button" data-tab-button="2">Orbit</button>
+          </div>
+          <div class="tab-viewport" id="tabViewport">
+            <div class="tab-track" id="tabTrack">
+              <article class="tab-panel panel-pulse">
+                <div class="panel-orbit"><i></i><i></i><i></i></div>
+                <span>01 / PULSE</span>
+                <h3>Short intervals, clear response.</h3>
+                <p>Tap a segment or drag the surface horizontally.</p>
+              </article>
+              <article class="tab-panel panel-drift">
+                <div class="drift-lines"><i></i><i></i><i></i><i></i></div>
+                <span>02 / DRIFT</span>
+                <h3>Movement that keeps its place.</h3>
+                <p>The selected index owns the indicator and content.</p>
+              </article>
+              <article class="tab-panel panel-orbit">
+                <div class="orbit-ring"><i></i></div>
+                <span>03 / ORBIT</span>
+                <h3>One system, three expressions.</h3>
+                <p>Release snaps to the nearest stable state.</p>
+              </article>
+            </div>
+          </div>
+          <div class="tab-foot"><span id="tabState">INDEX 00</span><span>DRAG OR TAP</span></div>
+        </section>
+
+        <section class="scene scene-burst" data-scene-panel="burst" aria-label="Retriggerable keyframe burst">
+          <div class="scene-head burst-head">
+            <p class="scene-kicker">KEYFRAME / RETRIGGER</p>
+            <h2>Make it land.</h2>
+          </div>
+          <div class="burst-zone" id="burstZone">
+            <div class="burst-ring ring-a" data-burst-ring></div>
+            <div class="burst-ring ring-b" data-burst-ring></div>
+            <div class="burst-ring ring-c" data-burst-ring></div>
+            <div class="particle-field" id="particleField"></div>
+            <button class="burst-button" id="burstButton" type="button" aria-label="Trigger reaction">
+              <span>✦</span>
+            </button>
+          </div>
+          <div class="burst-meta">
+            <div><span>REACTIONS</span><strong id="reactionCount">128</strong></div>
+            <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="true">MOTION ON</button>
+          </div>
+          <p class="burst-note">Tap repeatedly. The keyframe sequence restarts from the current visual state; rings and particles are cancelled before re-entry.</p>
+        </section>
+      </section>
+
+      <footer class="dock">
+        <span><i class="dock-dot"></i> 390 × 844</span>
+        <span>60 FPS TARGET</span>
+        <span id="clock">T+00</span>
+      </footer>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

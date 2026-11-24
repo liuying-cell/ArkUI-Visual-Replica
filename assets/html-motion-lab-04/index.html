@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Interruptible timeline</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 20px; background: #0d1012; color: #f4f2e9; font: 16px system-ui, sans-serif; }
+  main { max-width: 360px; margin: auto; }
+  h1 { font-size: 22px; margin: 0 0 16px; }
+  #tracks { display: grid; justify-items: center; gap: 8px; padding: 12px; background: #14181b; border-radius: 16px; }
+  .track { display: grid; place-items: center; width: 100%; height: 32px; border-radius: 16px; background: #24292d; }
+  .mark { width: 54px; height: 14px; border-radius: 7px; }
+  .track:nth-child(1) .mark { background: #d7ff57; }
+  .track:nth-child(2) .mark { background: #b7a2ff; }
+  .track:nth-child(3) .mark { background: #ffb18c; }
+  .actions { display: flex; gap: 8px; margin-top: 16px; }
+  button { flex: 1; height: 44px; border: 0; border-radius: 22px; background: #262b30; color: #f4f2e9; font-size: 12px; }
+  #play { background: #d7ff57; color: #081004; font-weight: bold; }
+  #status { color: #aeb4b5; font-size: 12px; }
+</style>
+<main>
+  <h1>Interruptible timeline</h1>
+  <div id="tracks" aria-hidden="true">
+    <div class="track"><div class="mark"></div></div>
+    <div class="track"><div class="mark"></div></div>
+    <div class="track"><div class="mark"></div></div>
+  </div>
+  <div class="actions">
+    <button id="play" aria-pressed="false">Play / Reverse</button>
+    <button id="reduce" aria-pressed="false">Reduce motion</button>
+  </div>
+  <p id="status">START</p>
+</main>
+<script>
+  const duration = 1400;
+  const marks = [...document.querySelectorAll('.mark')];
+  const windows = [[0, 0.62], [0.17, 0.78], [0.34, 1]];
+  const play = document.querySelector('#play');
+  const reduce = document.querySelector('#reduce');
+  const status = document.querySelector('#status');
+  let progress = 0;
+  let goal = 0;
+  let frame = 0;
+  let reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const ease = (p) => p * p * (3 - 2 * p);
+  function render(p) {
+    progress = p;
+    marks.forEach((mark, index) => {
+      const [start, end] = windows[index];
+      const local = Math.max(0, Math.min(1, (p - start) / (end - start)));
+      const arrive = ease(Math.min(1, local / 0.8));
+      const settle = ease(Math.max(0, (local - 0.8) / 0.2));
+      mark.style.transform = `translateX(${-66 + 140 * arrive - 8 * settle}px) scale(${0.76 + 0.29 * arrive - 0.05 * settle})`;
+      mark.style.opacity = 0.42 + 0.58 * arrive;
+    });
+  }
+
+  function stopAtGoal() {
+    render(goal);
+    status.textContent = goal ? 'END' : 'START';
+  }
+
+  function toggle() {
+    goal = 1 - goal;
+    play.setAttribute('aria-pressed', Boolean(goal));
+    cancelAnimationFrame(frame);
+    const from = progress;
+    const span = duration * Math.abs(goal - from);
+    if (reduced || span < 1) {
+      stopAtGoal();
+      return;
+    }
+    status.textContent = goal ? 'FORWARD' : 'REVERSE';
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.max(0, Math.min(1, (now - start) / span));
+      if (t === 1) stopAtGoal();
+      else {
+        render(from + (goal - from) * t);
+        frame = requestAnimationFrame(tick);
+      }
+    }
+    frame = requestAnimationFrame(tick);
+  }
+
+  play.addEventListener('click', toggle);
+  reduce.setAttribute('aria-pressed', reduced);
+  reduce.addEventListener('click', () => {
+    reduced = !reduced;
+    reduce.setAttribute('aria-pressed', reduced);
+    if (reduced) {
+      cancelAnimationFrame(frame);
+      stopAtGoal();
+    }
+  });
+  window.motionLab = { toggleTimeline: () => play.click() };
+  render(0);
+</script>
+</html>

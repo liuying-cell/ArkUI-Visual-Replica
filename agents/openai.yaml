@@ -1,0 +1,4 @@
+interface:
+  display_name: "ArkUI 视觉与动效复刻"
+  short_description: "将 HTML、截图或设计图高保真复刻为 HarmonyOS ArkUI，并验证原生交互动效"
+  default_prompt: "使用 $arkui-visual-replica 先确认源文件、目标页面、HarmonyOS 工程、静态/动效范围和验证目标，再实现 ArkUI/ArkTS；按场景只读取匹配的契约、映射与 QA 参考，动效任务需提供契约、交互路径和运行时证据。"

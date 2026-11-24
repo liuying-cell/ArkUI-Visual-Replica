@@ -1,0 +1,38 @@
+{
+  "id": "reaction-burst",
+  "reference": {
+    "entry": "html-motion-lab-02/index.html",
+    "inputs": [
+      "html-motion-lab-02/app.js",
+      "html-motion-lab-02/styles.css"
+    ],
+    "query": "scene=burst",
+    "triggerJs": "window.motionLab.triggerBurst()",
+    "width": 390,
+    "height": 844
+  },
+  "target": {
+    "model": "Mate 90 Pro",
+    "triggerClick": [
+      640,
+      1754
+    ],
+    "resetClick": [
+      1013,
+      940
+    ],
+    "crop": [
+      26,
+      86,
+      428,
+      906
+    ]
+  },
+  "timing": {
+    "checkpoints": [
+      "firstMotionMs",
+      "peakMotionMs"
+    ],
+    "toleranceMs": 75
+  }
+}

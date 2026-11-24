@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>逐字显示</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 20px; background: #0d1012; color: #f4f2e9; font-family: system-ui, sans-serif; }
+  main { max-width: 360px; margin: auto; }
+  h1 { font-size: 22px; line-height: 30px; margin: 0 0 16px; }
+  .stage { display: grid; place-items: center; height: 116px; background: #14181b; border-radius: 16px; }
+  .phrase { display: flex; gap: 4px; margin: 0; color: #d7ff57; font-size: 32px; font-weight: 600; line-height: 44px; white-space: nowrap; }
+  .glyph { opacity: 0; transform: translateY(12px); }
+  .actions { display: flex; gap: 8px; margin-top: 16px; }
+  button { flex: 1; height: 44px; border: 0; border-radius: 22px; background: #262b30; color: #f4f2e9; font-size: 13px; }
+  #play { background: #d7ff57; color: #081004; font-weight: bold; }
+  #status { color: #aeb4b5; font-size: 12px; }
+</style>
+<main>
+  <h1>逐字显示</h1>
+  <div class="stage">
+    <div class="phrase" id="phrase" role="group" aria-label="字句依次亮起。"></div>
+  </div>
+  <div class="actions">
+    <button id="play">重播</button>
+    <button id="show">显示全部</button>
+  </div>
+  <p id="status">待播放</p>
+</main>
+<script>
+  const phrase = document.querySelector('#phrase');
+  const status = document.querySelector('#status');
+  const play = document.querySelector('#play');
+  const glyphs = Array.from(phrase.getAttribute('aria-label'), (character) => {
+    const glyph = document.createElement('span');
+    glyph.className = 'glyph';
+    glyph.textContent = character;
+    glyph.setAttribute('aria-hidden', 'true');
+    phrase.append(glyph);
+    return glyph;
+  });
+  const stagger = 105;
+  const reveal = 230;
+  const duration = (glyphs.length - 1) * stagger + reveal;
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+
+  function render(elapsed) {
+    glyphs.forEach((glyph, index) => {
+      const p = Math.max(0, Math.min(1, (elapsed - index * stagger) / reveal));
+      const eased = p * p * (3 - 2 * p);
+      glyph.style.opacity = eased;
+      glyph.style.transform = `translateY(${12 * (1 - eased)}px)`;
+    });
+  }
+
+  function showAll() {
+    cancelAnimationFrame(frame);
+    render(duration);
+    status.textContent = '已显示';
+  }
+
+  play.addEventListener('click', () => {
+    cancelAnimationFrame(frame);
+    if (reducedMotion.matches) {
+      showAll();
+      return;
+    }
+    render(0);
+    status.textContent = '播放中';
+    const start = performance.now();
+    function tick(now) {
+      const elapsed = now - start;
+      if (elapsed >= duration) showAll();
+      else {
+        render(elapsed);
+        frame = requestAnimationFrame(tick);
+      }
+    }
+    frame = requestAnimationFrame(tick);
+  });
+  document.querySelector('#show').addEventListener('click', showAll);
+</script>
+</html>

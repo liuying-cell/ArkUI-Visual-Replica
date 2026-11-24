@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Behavioral forward-test cases for trigger precision, workflow routing, reference budget, evidence discipline, and negative boundaries.",
+  "cases": [
+    {
+      "id": "static-screenshot-replica",
+      "prompt": "把这个登录页截图高保真还原到现有 HarmonyOS 工程，截图是 390x844，页面在 entry 模块，先做到布局和视觉一致。",
+      "shouldTrigger": true,
+      "workflow": "static",
+      "requiredReferences": [
+        "references/image-visual-analysis.md",
+        "references/coordinate-baseline.md",
+        "references/arkui-visual-mapping.md",
+        "references/visual-qa.md"
+      ],
+      "forbiddenReferences": [
+        "references/motion-contract.md",
+        "references/motion-qa.md",
+        "references/arkui-motion-patterns.md"
+      ],
+      "minimumEvidenceLevel": "L2",
+      "acceptance": [
+        "Inspect the existing project before editing.",
+        "Establish screenshot-to-vp coordinate mapping.",
+        "Capture runtime evidence on an explicit target or disclose that only L0/L1 is available.",
+        "Do not add interactions that are absent from the requested visual surface."
+      ]
+    },
+    {
+      "id": "local-html-static-page",
+      "prompt": "local-demo/index.html?page=profile 这个页面要迁移为 ArkUI，页面有 CSS 渐变、遮罩和自定义字体，只复刻当前静态状态。",
+      "shouldTrigger": true,
+      "workflow": "static",
+      "requiredReferences": [
+        "references/local-html-capture.md",
+        "references/coordinate-baseline.md",
+        "references/arkui-visual-mapping.md",
+        "references/css-effect-mapping.md",
+        "references/visual-qa.md"
+      ],
+      "forbiddenReferences": [
+        "references/motion-contract.md",
+        "references/motion-qa-patterns.md"
+      ],
+      "minimumEvidenceLevel": "L1",
+      "acceptance": [
+        "Capture the rendered page after scripts run instead of trusting source literals.",
+        "Record the selected page state, viewport, and crop.",
+        "Disclose missing fonts or remote asset substitutions."
+      ]
+    },
+    {
+      "id": "spring-sheet-gesture",
+      "prompt": "把 HTML demo 里的底部弹层复刻成 ArkUI：点击打开、拖动跟手、松手按阈值吸附，抬起时把速度交给 spring。",
+      "shouldTrigger": true,
+      "workflow": "interaction-motion",
+      "requiredReferences": [
+        "references/motion-contract.md",
+        "references/arkui-motion-mapping.md",
+        "references/motion-qa.md"
+      ],
+      "forbiddenReferences": [
+        "references/arkui-motion-patterns.md",
+        "references/motion-contract-fields.md",
+        "references/motion-qa-patterns.md"
+      ],
+      "minimumEvidenceLevel": "L2",
+      "acceptance": [
+        "Record trigger, snap thresholds, velocity handoff, and interruption.",
+        "Verify a drag that starts while the sheet is settling.",
+        "Verify short and long releases separately."
+      ]
+    },
+    {
+      "id": "interruptible-timeline",
+      "prompt": "参考页里有三段错峰动画，反向和快速重复点击时都要从当前帧继续，不能跳回起点。请迁移到 ArkUI 并验证时序。",
+      "shouldTrigger": true,
+      "workflow": "interaction-motion",
+      "requiredReferences": [
+        "references/motion-contract.md",
+        "references/motion-contract-fields.md",
+        "references/arkui-motion-mapping.md",
+        "references/motion-qa.md",
+        "references/motion-measurement.md"
+      ],
+      "forbiddenReferences": [
+        "references/arkui-motion-patterns.md",
+        "references/motion-qa-patterns.md"
+      ],
+      "minimumEvidenceLevel": "L1",
+      "acceptance": [
+        "Define per-track phase windows and current-frame cancellation semantics.",
+        "Use a high-rate capture or explicitly downgrade timing claims.",
+        "Verify that only the latest run commits the final endpoint."
+      ]
+    },
+    {
+      "id": "scroll-linked-header",
+      "prompt": "HTML 页面滚动时，顶部图片缩小、标题收起、进度线变化。把这个效果还原到 HarmonyOS List 页面。",
+      "shouldTrigger": true,
+      "workflow": "interaction-motion",
+      "requiredReferences": [
+        "references/motion-contract.md",
+        "references/motion-contract-fields.md",
+        "references/arkui-motion-mapping.md",
+        "references/arkui-motion-patterns.md",
+        "references/motion-qa.md",
+        "references/motion-qa-patterns.md"
+      ],
+      "forbiddenReferences": [
+        "references/visual-motion.md",
+        "references/image-visual-analysis.md"
+      ],
+      "minimumEvidenceLevel": "L2",
+      "acceptance": [
+        "Normalize the scroll callback delta into absolute clamped progress.",
+        "Verify upward and downward response and overlay stacking.",
+        "Reconstruct an exact intermediate progress after reversal."
+      ]
+    },
+    {
+      "id": "particle-performance",
+      "prompt": "复刻参考 HTML 的密集 Canvas 粒子按钮效果。已有工程能运行，要求在目标模拟器上给出粒子性能和应用帧率证据。",
+      "shouldTrigger": true,
+      "workflow": "interaction-motion",
+      "requiredReferences": [
+        "references/motion-contract.md",
+        "references/motion-contract-fields.md",
+        "references/motion-qa.md",
+        "references/arkui-motion-mapping.md",
+        "references/motion-measurement.md"
+      ],
+      "forbiddenReferences": [
+        "references/motion-qa-patterns.md"
+      ],
+      "minimumEvidenceLevel": "L2",
+      "acceptance": [
+        "Record particle count, device, build mode, and sampling window.",
+        "Separate animation cadence from presented frame rate.",
+        "Report unavailable metrics instead of inferring FPS from sparse stills.",
+        "Record runtime evidence for the requested performance measurement. State which metrics the target can actually expose."
+      ]
+    },
+    {
+      "id": "existing-project-local-visual-edit",
+      "prompt": "现有 HarmonyOS 个人中心页已经能运行，只把这个页面的头部间距、字体和卡片圆角调整成设计图的样子，不要改业务逻辑。",
+      "shouldTrigger": true,
+      "workflow": "static",
+      "requiredReferences": [
+        "references/image-visual-analysis.md",
+        "references/arkui-visual-mapping.md",
+        "references/visual-qa.md",
+        "references/coordinate-baseline.md"
+      ],
+      "forbiddenReferences": [
+        "references/local-html-capture.md",
+        "references/motion-contract.md",
+        "references/motion-qa.md"
+      ],
+      "minimumEvidenceLevel": "L1",
+      "acceptance": [
+        "Preserve existing business logic and project conventions.",
+        "Limit edits to the requested visual surface.",
+        "Report visual differences that cannot be verified without a runtime."
+      ]
+    },
+    {
+      "id": "backend-api-change",
+      "prompt": "给 HarmonyOS 应用新增一个登录 API，处理 token 持久化和网络错误。",
+      "shouldTrigger": false,
+      "workflow": "not-applicable",
+      "requiredReferences": [],
+      "forbiddenReferences": [
+        "references/arkui-visual-mapping.md",
+        "references/motion-contract.md",
+        "references/visual-qa.md"
+      ],
+      "minimumEvidenceLevel": null,
+      "acceptance": [
+        "Do not load this visual replica skill.",
+        "Do not inspect or alter visual/motion assets for a backend-only task."
+      ]
+    },
+    {
+      "id": "original-design-no-reference",
+      "prompt": "帮我自由设计一个全新的 HarmonyOS 音乐首页，不要求还原任何现有页面，风格要有未来感。",
+      "shouldTrigger": false,
+      "workflow": "not-applicable",
+      "requiredReferences": [],
+      "forbiddenReferences": [
+        "references/coordinate-baseline.md",
+        "references/visual-qa.md",
+        "references/motion-contract.md"
+      ],
+      "minimumEvidenceLevel": null,
+      "acceptance": [
+        "Do not treat original design work as a replication task.",
+        "Do not invent a source reference or pixel baseline."
+      ]
+    },
+    {
+      "id": "device-unavailable-degrade",
+      "prompt": "照着附上的 HTML 欢迎页复刻 ArkUI。只保留背景的自动呼吸动效，不需要交互。当前没有连接设备，也不能启动模拟器，请先做实现和本地验证。",
+      "shouldTrigger": true,
+      "workflow": "visual-motion",
+      "requiredReferences": [
+        "references/local-html-capture.md",
+        "references/visual-motion.md",
+        "references/visual-qa.md",
+        "references/coordinate-baseline.md"
+      ],
+      "forbiddenReferences": [
+        "references/motion-contract-fields.md",
+        "references/arkui-motion-patterns.md",
+        "references/motion-qa-patterns.md"
+      ],
+      "minimumEvidenceLevel": "L0",
+      "acceptance": [
+        "Do not fabricate runtime or device evidence.",
+        "Complete source validation and static implementation where possible.",
+        "State the highest completed evidence level and the blocked checks."
+      ]
+    },
+    {
+      "id": "volumetric-cube",
+      "prompt": "把参考 HTML 里有亮暗面的旋转立方体复刻进现有 ArkUI 页面。支持暂停和拖拽接管，松手惯性要跟参考一致。",
+      "shouldTrigger": true,
+      "workflow": "interaction-motion",
+      "requiredReferences": [
+        "references/motion-contract.md",
+        "references/motion-contract-fields.md",
+        "references/arkui-motion-mapping.md",
+        "references/arkui-motion-patterns.md",
+        "references/motion-qa.md",
+        "references/motion-qa-patterns.md"
+      ],
+      "forbiddenReferences": [
+        "references/visual-motion.md"
+      ],
+      "minimumEvidenceLevel": "L2",
+      "acceptance": [
+        "Inspect connected edges, visible faces, and phase-dependent lighting on the named target.",
+        "Check hold, drag dead zone, inertia, and whether the user pause survives a drag."
+      ]
+    },
+    {
+      "id": "arkui-state-only",
+      "prompt": "修复这个 ArkUI 列表重复刷新后选中状态丢失的问题，保留现有布局和动效。",
+      "shouldTrigger": false,
+      "workflow": "not-applicable",
+      "requiredReferences": [],
+      "forbiddenReferences": [
+        "references/arkui-visual-mapping.md",
+        "references/motion-contract.md"
+      ],
+      "minimumEvidenceLevel": null,
+      "acceptance": [
+        "Handle the state bug without entering the replication workflow."
+      ]
+    }
+  ]
+}

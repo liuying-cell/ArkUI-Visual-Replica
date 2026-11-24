@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "id": "motion-lab-batch-03",
+  "source": {
+    "type": "html",
+    "path": "html-motion-lab-03/index.html",
+    "scene": "all",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "unit": "css-px"
+    }
+  },
+  "target": {
+    "platform": "HarmonyOS NEXT",
+    "apiLevel": 18,
+    "unit": "vp"
+  },
+  "scenes": [
+    {
+      "id": "navigation-shared-card",
+      "trigger": {
+        "type": "tap"
+      },
+      "durationMs": 520,
+      "properties": [
+        "page.opacity",
+        "page.translateX",
+        "hero.frame",
+        "hero.borderRadius",
+        "hero.scale"
+      ],
+      "interruption": "Pop during push uses the current shared geometry and page surface; rapid close does not leave duplicate hero nodes.",
+      "accessibility": "The card is a labelled button and the detail page has an explicit close control.",
+      "performance": "Keep one geometry identity; animate transform, opacity, frame and radius without blur or decorative particle work.",
+      "timingValidation": {
+        "sampling": {
+          "reference": "browser-screencast",
+          "target": "emulator-window"
+        },
+        "checkpoints": [
+          {
+            "name": "first-visible-motion",
+            "anchor": "firstMotionMs",
+            "toleranceMs": 75
+          },
+          {
+            "name": "transition-peak",
+            "anchor": "peakMotionMs",
+            "toleranceMs": 75
+          }
+        ],
+        "evidence": {
+          "comparison": "outputs/batch-03/navigation/comparison.json"
+        }
+      }
+    },
+    {
+      "id": "interruptible-list",
+      "trigger": {
+        "type": "state-change"
+      },
+      "durationMs": 340,
+      "properties": [
+        "row.translateY",
+        "row.opacity",
+        "row.scale",
+        "row.layoutPosition"
+      ],
+      "gesture": {
+        "axis": "vertical",
+        "threshold": 0,
+        "velocityHandoff": false
+      },
+      "interruption": "Rapid add/remove keeps the latest state and starts the next layout transition from the currently rendered positions.",
+      "accessibility": "Add, remove and rapid-test actions are independent buttons; layout change is not gesture-only.",
+      "performance": "Animate a small row set with transitions; avoid per-frame resource creation and keep rows keyed by stable ids.",
+      "timingValidation": {
+        "sampling": {
+          "reference": "browser-screencast",
+          "target": "emulator-window"
+        },
+        "checkpoints": [
+          {
+            "name": "layout-peak",
+            "anchor": "peakMotionMs",
+            "toleranceMs": 75
+          }
+        ],
+        "evidence": {
+          "comparison": "outputs/batch-03/list/comparison.json"
+        }
+      }
+    },
+    {
+      "id": "gesture-card-stack",
+      "trigger": {
+        "type": "drag-release"
+      },
+      "durationMs": 340,
+      "properties": [
+        "card.translateX",
+        "card.translateY",
+        "card.rotateZ",
+        "card.scale",
+        "card.opacity"
+      ],
+      "gesture": {
+        "axis": "horizontal",
+        "threshold": 110,
+        "velocityHandoff": true
+      },
+      "spring": {
+        "response": 0.45,
+        "dampingFraction": 0.82
+      },
+      "interruption": "A new drag owns the card offset; release below threshold springs back from the current rendered transform and above threshold flies out.",
+      "accessibility": "A reset button restores the stack without requiring a gesture.",
+      "performance": "Use transform and opacity only; keep card count low and avoid blur or shadow recalculation during drag."
+    }
+  ],
+  "notes": [
+    "Navigation push and pop run inside animateTo with the default transition disabled.",
+    "The list scene uses explicit animateTo plus per-row transition effects.",
+    "The card stack uses PanGesture plus springMotion and a velocity threshold fallback.",
+    "The list timing checkpoint uses peakMotionMs because the first visible frame is less stable after trigger injection."
+  ]
+}

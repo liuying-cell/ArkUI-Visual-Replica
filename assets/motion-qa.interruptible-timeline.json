@@ -1,0 +1,26 @@
+{
+  "id": "interruptible-timeline",
+  "reference": {
+    "entry": "html-motion-lab-04/index.html",
+    "triggerJs": "window.motionLab.toggleTimeline()",
+    "width": 390,
+    "height": 844,
+    "durationMs": 1850,
+    "roi": "20,62,350,138"
+  },
+  "target": {
+    "model": "Mate 90 Pro",
+    "expectedNodes": [
+      { "id": "timeline-play" },
+      { "id": "timeline-status", "text": "START" }
+    ],
+    "triggerClick": [385, 1901],
+    "crop": [26, 86, 428, 906],
+    "durationMs": 1850,
+    "roi": "0.11,0.438,0.78,0.191"
+  },
+  "timing": {
+    "checkpoints": ["firstMotionMs", "peakMotionMs"],
+    "toleranceMs": 75
+  }
+}

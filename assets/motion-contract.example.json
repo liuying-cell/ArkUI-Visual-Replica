@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "id": "motion-lab-three-studies",
+  "source": {
+    "type": "html",
+    "path": "html-motion-lab/index.html",
+    "scene": "all",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "unit": "css-px"
+    }
+  },
+  "target": {
+    "platform": "HarmonyOS NEXT",
+    "apiLevel": 18,
+    "unit": "vp"
+  },
+  "scenes": [
+    {
+      "id": "timeline-stagger",
+      "trigger": {
+        "type": "scene-enter",
+        "replay": "explicit"
+      },
+      "durationMs": 620,
+      "properties": [
+        "opacity",
+        "translateY",
+        "scale"
+      ],
+      "timeline": {
+        "staggerMs": 85,
+        "order": "card-index",
+        "settle": "spring-like cubic-bezier(0.2, 0.8, 0.2, 1)"
+      },
+      "interruption": "Replay cancels every active card animation and restarts from the hidden state.",
+      "accessibility": "The final content is readable without the entrance sequence.",
+      "performance": "Animate opacity and transform only."
+    },
+    {
+      "id": "gesture-spring-sheet",
+      "trigger": {
+        "type": "tap-or-pan",
+        "directions": [
+          "vertical"
+        ]
+      },
+      "durationMs": null,
+      "properties": [
+        "translateY",
+        "scrim.opacity"
+      ],
+      "spring": {
+        "response": 0.45,
+        "dampingFraction": 0.82,
+        "velocityHandoff": true
+      },
+      "gesture": {
+        "follow": "sheet.translateY = startOffset + pan.offsetY",
+        "openThreshold": 0.35,
+        "closeThreshold": 0.65,
+        "openVelocityThreshold": "upward",
+        "closeVelocityThreshold": "downward"
+      },
+      "interruption": "Pointer down stops settling; the sheet continues from the current offset and inherited velocity.",
+      "accessibility": "Provide a tap target for opening and a visible close path.",
+      "performance": "Use a single translate transform and avoid blur during drag."
+    },
+    {
+      "id": "shared-orb",
+      "trigger": {
+        "type": "tap"
+      },
+      "durationMs": 520,
+      "properties": [
+        "frame",
+        "cornerRadius",
+        "content.opacity"
+      ],
+      "curve": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+      "interruption": "Close reverses from the current rendered frame; geometry identity must not reset.",
+      "accessibility": "Expose a visible close button and preserve text outside the animated object.",
+      "performance": "Use geometryTransition rather than layout animation of many descendants."
+    }
+  ],
+  "notes": [
+    "The HTML reference uses a JavaScript spring integrator for the sheet.",
+    "The ArkUI implementation maps this behavior to curves.springMotion and PanGesture.",
+    "The HTML shared-object frame animation maps to geometryTransition in ArkUI."
+  ]
+}

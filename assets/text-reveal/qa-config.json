@@ -1,0 +1,73 @@
+{
+  "id": "text-reveal",
+  "reference": {
+    "entry": "index.html",
+    "triggerJs": "document.getElementById('play').click()",
+    "width": 390,
+    "height": 844,
+    "durationMs": 1450,
+    "roi": "20,66,350,116"
+  },
+  "target": {
+    "model": "Mate 90 Pro",
+    "expectedNodes": [
+      {
+        "id": "text-reveal-play"
+      },
+      {
+        "id": "text-reveal-status",
+        "text": "待播放"
+      }
+    ],
+    "triggerClick": [
+      385,
+      1846
+    ],
+    "crop": [
+      26,
+      86,
+      428,
+      906
+    ],
+    "durationMs": 1500,
+    "quickRoi": "40,332,280,104",
+    "timingRoi": "42,416,344,140"
+  },
+  "timing": {
+    "checkpoints": [
+      "firstMotionMs"
+    ],
+    "toleranceMs": 75
+  },
+  "glyphTiming": {
+    "text": "字句依次亮起。",
+    "crossingFraction": 0.5,
+    "alignGlyphIndex": 0,
+    "staggerMs": 105,
+    "toleranceMs": 75,
+    "reference": {
+      "size": [
+        390,
+        844
+      ],
+      "firstSlotX": 69,
+      "slotPitch": 36,
+      "yRange": [
+        96,
+        155
+      ]
+    },
+    "target": {
+      "size": [
+        428,
+        906
+      ],
+      "firstSlotX": 54,
+      "slotPitch": 45.35,
+      "yRange": [
+        446,
+        530
+      ]
+    }
+  }
+}
