@@ -1,6 +1,6 @@
 # ArkUI Visual Replica
 
-面向 HarmonyOS NEXT 的 Codex Skill，使用 ArkUI / ArkTS 高保真复刻截图、设计稿或本地 HTML 原型中的界面与动效，支持截图对比和交互验证。
+面向 AI Agent 的 HarmonyOS NEXT 界面与动效复刻技能资源，指导 Agent 以截图、设计稿或本地 HTML 原型为参考，用 ArkUI / ArkTS 高保真复刻界面与动效，并通过截图对比和交互验证检查还原效果。
 
 ## 适用场景
 
@@ -12,20 +12,20 @@
 
 适合有明确视觉参考的任务。工作范围以选定页面、组件和交互为准。
 
-## 安装到 Codex
+## 获取与使用
 
-在 Windows PowerShell 中将仓库克隆到用户 Skill 目录。目录名使用 `arkui-visual-replica`，并保留仓库里的脚本和示例资源。
+使用 Git 下载技能资源，并保留目录结构。也可以在 GitHub 下载 ZIP，解压后将目录命名为 `arkui-visual-replica`。
 
-```powershell
-$skillsDir = Join-Path $HOME '.agents/skills'
-New-Item -ItemType Directory -Path $skillsDir -Force | Out-Null
-$skillDir = Join-Path $skillsDir 'arkui-visual-replica'
-git clone https://github.com/liuying-cell/ArkUI-Visual-Replica.git $skillDir
+```bash
+git clone https://github.com/liuying-cell/ArkUI-Visual-Replica.git arkui-visual-replica
 ```
 
-在 Codex 对话中用 `$arkui-visual-replica` 显式调用。把示例里的参考文件和目标组件替换成你的项目路径即可。
+- **支持技能导入的 Agent**可按平台文档导入整个 `arkui-visual-replica` 目录，再按技能名称调用。以 Codex 为例，可在对话中输入 `$arkui-visual-replica`。
+- **直接在对话中使用**时，可以把仓库放到 Agent 可访问的工作区，或在对话中提供 [`SKILL.md`](SKILL.md) 和任务所需的参考文档、脚本与素材。请 Agent 先阅读 `SKILL.md`，再按任务选用资源。
 
-> 使用 $arkui-visual-replica，把 `design/profile.png` 复刻到现有鸿蒙项目的 `ProfilePage.ets`。只做静态页面，保留现有逻辑。构建后对比头像、标题和底部按钮的位置，并报告实际完成的验证。
+发起任务时，给出视觉参考、目标页面或组件，以及希望验证的细节。下面的提示词可以直接使用。
+
+> 请按 `arkui-visual-replica/SKILL.md` 的流程，将 `design/profile.png` 复刻到现有鸿蒙项目的 `ProfilePage.ets`。只做静态页面，保留现有逻辑。构建后对比头像、标题和底部按钮的位置，并报告实际完成的验证。
 
 交互动效任务还可以指定动作和验收点，例如「快速连点反向播放时，从当前帧继续，记录打断前后的关键帧」。
 
