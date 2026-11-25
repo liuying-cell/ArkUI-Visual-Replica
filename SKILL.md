@@ -81,3 +81,16 @@ Open only the references and sections needed for the chosen workflow. The
   [motion QA criteria and handoff](references/motion-qa.md#handoff). Report the evidence
   actually captured and the remaining differences. Resolve script and asset paths relative to
   this skill directory.
+
+## Review Difficult Replicas
+
+- During implementation, briefly record the symptom, failed approach, and evidence when
+  repeated rework, a change of approach, or a late QA finding affects the result.
+- At handoff, suggest at most one skill change if it would help on another page and change a
+  decision about implementation or QA. Keep page-specific details in the task notes and label
+  unresolved causes as hypotheses. Apply skill changes only during authorized maintenance.
+- During maintenance, require recurrence on another page or a reliably reproducible finding
+  with clear impact. State the trigger, action, verification, and applicable SDK or device scope.
+  Fix routing if an existing rule was missed and revise its wording if it was unclear. Merge
+  overlapping guidance. Put shared decisions in this file and scenario-specific advice in the
+  closest reference. Check the original case and a nearby case before generalizing.

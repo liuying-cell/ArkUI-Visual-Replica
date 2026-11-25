@@ -23,7 +23,8 @@
         "Inspect the existing project before editing.",
         "Establish screenshot-to-vp coordinate mapping.",
         "Capture runtime evidence on an explicit target or disclose that only L0/L1 is available.",
-        "Do not add interactions that are absent from the requested visual surface."
+        "Do not add interactions that are absent from the requested visual surface.",
+        "Skip the skill review when the implementation and QA follow the existing workflow without material rework."
       ]
     },
     {
@@ -91,7 +92,8 @@
       "acceptance": [
         "Define per-track phase windows and current-frame cancellation semantics.",
         "Use a high-rate capture or explicitly downgrade timing claims.",
-        "Verify that only the latest run commits the final endpoint."
+        "Verify that only the latest run commits the final endpoint.",
+        "If a missed instruction or late QA finding causes rework, report at most one evidence-backed skill improvement without editing skill files during the replica task."
       ]
     },
     {
