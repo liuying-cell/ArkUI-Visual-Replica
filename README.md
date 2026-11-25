@@ -1,6 +1,6 @@
 # ArkUI Visual Replica
 
-用于 HarmonyOS NEXT 的 Codex Skill。给它一张截图、一份设计稿或一个本地 HTML 原型，它会按参考还原指定的页面或组件，使用 ArkUI / ArkTS 实现原生布局和动效，并记录实际完成的验证。
+面向 HarmonyOS NEXT 的 Codex Skill，使用 ArkUI / ArkTS 高保真复刻截图、设计稿或本地 HTML 原型中的界面与动效，支持截图对比和交互验证。
 
 ## 适用场景
 
